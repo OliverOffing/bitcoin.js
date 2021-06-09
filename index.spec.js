@@ -58,7 +58,7 @@ describe("createTransaction", () => {
       ownerPrivateKey,
     });
 
-    assert.deepEqual(
+    assert.deepStrictEqual(
       tx[1],
       bitcoino.getHash([previousTransaction, newOwnerPublicKey])
     );
@@ -78,7 +78,7 @@ describe("createTransaction", () => {
       ownerPrivateKey,
     });
 
-    assert.deepEqual(
+    assert.deepStrictEqual(
       tx[2],
       bitcoino.sign(
         bitcoino.getHash([previousTransactionHash, newOwnerPublicKey]),
@@ -146,6 +146,35 @@ describe("Chain of transactions (digital signatures)", () => {
         transaction: tx2,
         previousOwnerPublicKey: alice.publicKey,
       })
+    );
+  });
+});
+
+describe("Mining", () => {
+  it("returns a buffer", () => {
+    const hash = bitcoino.mine();
+    assert(Buffer.isBuffer(hash));
+  });
+  it("returns a buffer of length 32", () => {
+    const hash = bitcoino.mine();
+    assert.strictEqual(hash.length, 32);
+  });
+  it("returns a buffer with 1 leading zero", () => {
+    const hash = bitcoino.mine({ difficulty: 1 });
+    assert.strictEqual(hash[0], 0);
+  });
+  it("returns a buffer with N leading zeros", () => {
+    const difficulty = 2;
+    const hash = bitcoino.mine({ difficulty });
+    assert.strictEqual(
+      hash.compare(
+        Buffer.from(Array.from({ length: difficulty }, (v, i) => 0)),
+        0,
+        difficulty,
+        0,
+        difficulty
+      ),
+      0
     );
   });
 });
