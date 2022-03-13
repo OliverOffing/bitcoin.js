@@ -1,3 +1,7 @@
+# Disclaimer
+
+This project was put on pause. The fact that Bitcoin doesn't have a clear protocol—and that Bitcoin Code is the de facto protocol—means this project would have to replicate all the features, and all the bugs, of Bitcoin Core. I'm not interested in that but I'll keep this repo here for historical purposes. Also, it's quite educational to read the tests (at least I think so).
+
 # Bitcoin.js
 
 Highly experimental implementation of a Bitcoin Full Node on JavaScript.
